@@ -25,24 +25,23 @@ public class Controller {
     }
 
     public void processUser() {
-        init();
-        view.printTree((TreeSet<Tour>) model.getTours());
-        view.printMsg("====================================");
-        view.printTree(sortTours(new CompareTour(FieldAndOrder.PRICE_ASC).getComparator(),model.getTours()));
-        view.printMsg("====================================");
-        FakeTourForSelections.Builder builder = FakeTourForSelections.getBuilder();
-        builder.setPrice(BigDecimal.valueOf(500));
-        FakeTourForSelections forSelections = builder.build();
-        view.printTree(selectTours(forSelections,new CompareTour(FieldAndOrder.PRICE_ASC).getComparator(),
-                (SortedSet<Tour>) model.getTours()));
-        view.printMsg("====================================");
-        builder.setPrice(BigDecimal.valueOf(500));
-        builder.setDuration(10);
-        FakeTourForSelections forSelections1 = builder.build();
-        Set<Comparator<Tour>> comparators = new HashSet<>();
-        comparators.add(new CompareTour(FieldAndOrder.PRICE_ASC).getComparator());
-        comparators.add(new CompareTour(FieldAndOrder.DURATION_ASC).getComparator());
-        view.printTree(selectTours(forSelections1,comparators, (SortedSet<Tour>) model.getTours()));
+
+//        view.printTree((TreeSet<Tour>) model.getTours());
+//        view.printMsg("====================================");
+//        view.printTree(sortTours(new CompareTour(FieldAndOrder.TRANSFER_ASC).getComparator(),model.getTours()));
+////        view.printMsg("====================================");
+////        builder.setPrice(BigDecimal.valueOf(500));
+////        FakeTourForSelections forSelections = builder.build();
+////        view.printTree(selectTours(forSelections,new CompareTour(FieldAndOrder.PRICE_ASC).getComparator(),
+////                (SortedSet<Tour>) model.getTours()));
+//        view.printMsg("====================================");
+//        builder.setPrice(BigDecimal.valueOf(1000));
+//        builder.setTransfer(TypeOfTransfer.BUS);
+//        FakeTourForSelections forSelections1 = builder.build();
+//        Set<Comparator<Tour>> comparators = new HashSet<>();
+//        comparators.add(new CompareTour(FieldAndOrder.PRICE_ASC).getComparator());
+//        comparators.add(new CompareTour(FieldAndOrder.TRANSFER_ASC).getComparator());
+//        view.printTree(selectTours(forSelections1,comparators, (SortedSet<Tour>) model.getTours()));
     }
 
     public TreeSet<Tour> sortTours(Comparator<Tour> comparator, Collection<Tour> tourCollection) {
@@ -67,11 +66,11 @@ public class Controller {
         return (TreeSet<Tour>) treeSet;
     }
 
-
-    private void init() {
-        for (InitTour initTour : InitTour.values()) {
-            model.addTour(initTour.getTour());
-        }
+    public Model getModel() {
+        return model;
     }
 
+    public View getView() {
+        return view;
+    }
 }

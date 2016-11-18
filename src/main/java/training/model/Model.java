@@ -1,7 +1,10 @@
 package training.model;
 
 import training.model.entity.Tour;
+import training.model.entity.comparators.CompareTour;
+import training.model.entity.comparators.FieldAndOrder;
 
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -9,7 +12,7 @@ import java.util.TreeSet;
  * @author kara.vladimir2@gmail.com.
  */
 public class Model {
-    private Set<Tour> tours = new TreeSet<>();
+    private Set<Tour> tours = new TreeSet<>(new CompareTour(FieldAndOrder.NAME).getComparator());
 
     public Set<Tour> getTours() {
         return tours;

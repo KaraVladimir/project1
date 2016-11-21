@@ -2,17 +2,17 @@ package training.controller;
 
 import training.InitTour;
 import training.model.Model;
-import training.model.entity.Tour;
-import training.model.entity.TypeOfTransfer;
-import training.model.entity.comparators.CompareTour;
-import training.model.entity.comparators.FieldAndOrder;
-import training.model.entity.impl.fakeTour.FakeTourForSelections;
+import training.model.entity.AbstractTour;
+import training.model.entity.utils.FilterObj;
+import training.model.entity.utils.SortObj;
 import training.view.View;
+import training.model.entity.utils.SortObj.*;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 /**
+ * Controller
  * @author kara.vladimir2@gmail.com.
  */
 public class Controller {
@@ -24,53 +24,26 @@ public class Controller {
         this.view = view;
     }
 
+    /**
+     * main logic in this method
+     */
     public void processUser() {
-
-//        view.printTree((TreeSet<Tour>) model.getTours());
-//        view.printMsg("====================================");
-//        view.printTree(sortTours(new CompareTour(FieldAndOrder.TRANSFER_ASC).getComparator(),model.getTours()));
-////        view.printMsg("====================================");
-////        builder.setPrice(BigDecimal.valueOf(500));
-////        FakeTourForSelections forSelections = builder.build();
-////        view.printTree(selectTours(forSelections,new CompareTour(FieldAndOrder.PRICE_ASC).getComparator(),
-////                (SortedSet<Tour>) model.getTours()));
-//        view.printMsg("====================================");
-//        builder.setPrice(BigDecimal.valueOf(1000));
-//        builder.setTransfer(TypeOfTransfer.BUS);
-//        FakeTourForSelections forSelections1 = builder.build();
-//        Set<Comparator<Tour>> comparators = new HashSet<>();
-//        comparators.add(new CompareTour(FieldAndOrder.PRICE_ASC).getComparator());
-//        comparators.add(new CompareTour(FieldAndOrder.TRANSFER_ASC).getComparator());
-//        view.printTree(selectTours(forSelections1,comparators, (SortedSet<Tour>) model.getTours()));
-    }
-
-    public TreeSet<Tour> sortTours(Comparator<Tour> comparator, Collection<Tour> tourCollection) {
-        TreeSet<Tour> treeSet = new TreeSet<>(comparator);
-        treeSet.addAll(tourCollection);
-        return treeSet;
-    }
-
-    public TreeSet<Tour> selectTours(Tour tour, Set<Comparator<Tour>> comparatorSet, SortedSet<Tour> tourCollection) {
-        for (Comparator<Tour> tourComparator : comparatorSet) {
-            tourCollection = selectTours(tour, tourComparator, tourCollection);
+        for (InitTour initTour : InitTour.values()) {
+            model.addTour(initTour.getTour());
         }
-        return (TreeSet<Tour>) tourCollection;
-    }
-
-    public TreeSet<Tour> selectTours(Tour tour,Comparator<Tour>comparator,SortedSet<Tour> tourCollection) {
-        tourCollection.add(tour);
-        SortedSet<Tour> treeSet = new TreeSet<>(comparator);
-        treeSet.addAll(tourCollection);
-        treeSet = treeSet.tailSet(tour);
-        treeSet.remove(tour);
-        return (TreeSet<Tour>) treeSet;
+        List<SortObj> list = new ArrayList<>();
+        list.add(new SortObj(Model.Fields.TRANSFER, Orders.ASC));
+        list.add(new SortObj(Model.Fields.DURATION, Orders.DESC));
+        view.printTours(model.filterTours(list));
+        System.out.println("=====================================");
+        List<FilterObj> filterObjs = new ArrayList<>();
+        filterObjs.add(new FilterObj(Model.Fields.PRICE, FilterObj.Expression.MORE, BigDecimal.valueOf(500)));
+        filterObjs.add(new FilterObj(Model.Fields.TRANSFER, FilterObj.Expression.EQUAL,
+                AbstractTour.TypeOfTransfer.TRAIN));
+        view.printTours(model.selectTours(filterObjs));
     }
 
     public Model getModel() {
         return model;
-    }
-
-    public View getView() {
-        return view;
     }
 }

@@ -1,13 +1,11 @@
-package training.model.entity.impl.realTour;
+package training.model.entity.impl;
 
 import training.model.entity.AbstractTour;
-import training.model.entity.Tour;
-import training.model.entity.TypeOfCatering;
-import training.model.entity.TypeOfTransfer;
 
 import java.math.BigDecimal;
 
 /**
+ * This class represents is a kind of tour - cruise
  * @author kara.vladimir2@gmail.com.
  */
 public class CruiseTour extends AbstractTour {

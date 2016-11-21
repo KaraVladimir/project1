@@ -3,17 +3,16 @@ package training.model.entity;
 import java.math.BigDecimal;
 
 /**
+ * This class implements common functionality of all tours
  * @author kara.vladimir2@gmail.com.
  */
 public abstract class AbstractTour implements Tour {
-    protected String name;
-    protected BigDecimal price;
-    protected int duration;
-    protected TypeOfTransfer transfer;
-    protected TypeOfCatering catering;
+    private String name;
+    private BigDecimal price;
+    private int duration;
+    private TypeOfTransfer transfer;
+    private TypeOfCatering catering;
 
-    protected AbstractTour() {
-    }
 
     public AbstractTour(String name, BigDecimal price, int duration,
                         TypeOfTransfer transfer, TypeOfCatering catering) {
@@ -45,10 +44,6 @@ public abstract class AbstractTour implements Tour {
         return name;
     }
 
-    @Override
-    public int compareTo(Tour o) {
-        return this.getName().compareTo(o.getName());
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -59,9 +54,7 @@ public abstract class AbstractTour implements Tour {
 
         if (duration != that.duration) return false;
         if (!name.equals(that.name)) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (transfer != that.transfer) return false;
-        return catering == that.catering;
+        return price != null ? price.equals(that.price) : that.price == null && transfer == that.transfer && catering == that.catering;
 
     }
 
@@ -83,5 +76,22 @@ public abstract class AbstractTour implements Tour {
                 ", transfer=" + transfer +
                 ", catering=" + catering;
     }
+
+
+    /**
+     * Available catering's type
+     * @author kara.vladimir2@gmail.com.
+     */
+    public enum TypeOfCatering {
+        RO, BB, FB, HB, AI
+    }
+
+    /**
+     * @author kara.vladimir2@gmail.com.
+     */
+    public enum TypeOfTransfer {
+        BUS,TRAIN,PLANE
+    }
 }
+
 

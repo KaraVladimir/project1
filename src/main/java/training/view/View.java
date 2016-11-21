@@ -2,9 +2,11 @@ package training.view;
 
 import training.model.entity.Tour;
 
+import java.util.List;
 import java.util.TreeSet;
 
 /**
+ * View
  * @author kara.vladimir2@gmail.com.
  */
 public class View {
@@ -12,9 +14,7 @@ public class View {
         System.out.println(s);
     }
 
-    public void printTree(TreeSet<Tour> tours) {
-        for (Tour tour : tours) {
-            System.out.println(tour.toString());
-        }
+    public void printTours(List<Tour> tours) {
+        tours.stream().forEach(System.out::println);
     }
 }

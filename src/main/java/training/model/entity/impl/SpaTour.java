@@ -1,13 +1,12 @@
-package training.model.entity.impl.realTour;
+package training.model.entity.impl;
 
 import training.model.entity.AbstractTour;
-import training.model.entity.TypeOfCatering;
-import training.model.entity.TypeOfTransfer;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 
 /**
+ * This class represents is a kind of tour - spa tour
  * @author kara.vladimir2@gmail.com.
  */
 public class SpaTour extends AbstractTour {
